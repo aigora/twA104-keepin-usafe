@@ -4,7 +4,7 @@ Descripción breve del proyecto a realizar (2-3 frases).
 
 ## Integrantes del equipo
 
-David Hergueta Soto (usuario davidherguetasoto)
+David Hergueta Soto (usuario davidherguetasoto) y Guillermo Aparicio Voces (usuario guillermoapariciovoces)
 
 ## Objetivos del trabajo
 
