@@ -1,6 +1,6 @@
 # Alarma automática de "Keepin'USafe
 
-Descripción breve del proyecto a realizar (2-3 frases).
+Alarma autmática realizada con arduino que sea capaz de detectar y avisar del paso de un intruso.
 
 ## Integrantes del equipo
 
