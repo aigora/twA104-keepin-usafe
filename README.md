@@ -1,10 +1,10 @@
-# Título del trabajo
+# Alarma automática de "Keepin'USafe
 
 Descripción breve del proyecto a realizar (2-3 frases).
 
 ## Integrantes del equipo
 
-Nombres, apellidos, y usuario GitHub de los integrantes del equipo.
+David Hergueta Soto (usuario davidherguetasoto)
 
 ## Objetivos del trabajo
 
