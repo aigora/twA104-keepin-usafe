@@ -1,3 +1,0 @@
-﻿  Programa_alarma.c
-c:\users\david h\source\repos\alarma arduino\programa_alarma.c(48): warning C4013: 'getch' sin definir; se supone que extern devuelve como resultado int
-  Alarma arduino.vcxproj -> C:\Users\David H\source\repos\Alarma arduino\Debug\Alarma arduino.exe
