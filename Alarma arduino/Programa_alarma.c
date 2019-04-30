@@ -11,6 +11,5 @@
 
 void main()
 {
-	printf("hola");
-	system("PAUSE");
+
 }
