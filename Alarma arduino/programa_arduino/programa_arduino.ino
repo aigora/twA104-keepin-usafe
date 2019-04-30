@@ -23,7 +23,7 @@ void TonoAlarma(int Zumbador)
   
    for(i=0;i<180;i++)
   {
-    sinVal=(sin(i*(3.1412/180))); //Señal senoidal. Solo valores positivos
+    sinVal=(sin(i*(3.1412/180))); //Señal senoidal para el zumbador. Solo valores positivos
     toneVal=2000+(int)(sinVal*1000);
     tone(Zumbador,toneVal); //Tono zumbador
     delay(2);
