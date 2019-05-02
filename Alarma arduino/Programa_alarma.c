@@ -7,6 +7,7 @@
 #define MAX_DATA_LENGTH 255
 
 //Funciones para comunicacion serial
+	void autoConnect(SerialPort *arduino, char*);
 	void Crear_Conexion(SerialPort *PuertoSerie, char *portName);
 	void CerrarConexion(SerialPort * PuertoSerie);
 	int readSerialPort(SerialPort * PuertoSerie, char *buffer, unsigned int buf_size);
@@ -17,8 +18,53 @@
 
 void main()
 {
-	
+	printf("			SISTEMA DE ALARMAS KEEP'N YOU SAFE\n\n");
+
+	//Arduino SerialPort object
+	SerialPort *arduino;
+	// Puerto serie en el que está Arduino
+	char* portName = "COM5";
+	// Buffer para datos procedentes de Arduino
+	char incomingData[MAX_DATA_LENGTH];
+
+	// Crear estructura de datos del puerto serie
+	arduino = (SerialPort *)malloc(sizeof(SerialPort));
+	// Apertura del puerto serie
+	Crear_Conexion(arduino, portName);
+	autoConnect(arduino, incomingData);
+
 }
+
+void autoConnect(SerialPort *arduino, char *incomingData)
+{
+	char sendData = 0;
+
+	// Espera la conexión con Arduino
+	while (!isConnected(arduino))
+	{
+		Sleep(100);
+		Crear_Conexion(arduino, arduino->portName);
+	}
+	//Comprueba si arduino está connectado
+	if (isConnected(arduino))
+	{	
+		printf("Conectado con Arduino en el puerto %s\n", arduino->portName);
+	}
+	
+	// APLICACIÓN
+	while (isConnected(arduino))
+	{
+	
+	}
+
+	if (!isConnected(arduino))
+	{
+		system("CLS");
+		printf("Se ha perdido la conexion con Arduino\n");
+		system("PAUSE");
+	}
+}
+
 
 
 //Funciones para la comunicacion serial
@@ -126,4 +172,3 @@ int isConnected(SerialPort *PuertoSerie)
 		PuertoSerie->connected = 0;
 	return PuertoSerie->connected;
 }
-
