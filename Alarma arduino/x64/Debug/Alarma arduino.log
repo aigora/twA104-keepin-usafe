@@ -1,2 +1,4 @@
 ﻿  Programa_alarma.c
-  Alarma arduino.vcxproj -> D:\David H\Documents\GitHub\twA104-keepin-usafe\Alarma arduino\x64\Debug\Alarma arduino.exe
+d:\david h\documents\github\twa104-keepin-usafe\alarma arduino\programa_alarma.c(94): warning C4013: '_getch' sin definir; se supone que extern devuelve como resultado int
+d:\david h\documents\github\twa104-keepin-usafe\alarma arduino\programa_alarma.c(108): warning C4047: '=': 'char' es distinto en los niveles de direccionamiento indirecto de 'void *'
+d:\david h\documents\github\twa104-keepin-usafe\alarma arduino\programa_alarma.c(128): warning C4047: '=': 'char' es distinto en los niveles de direccionamiento indirecto de 'void *'
