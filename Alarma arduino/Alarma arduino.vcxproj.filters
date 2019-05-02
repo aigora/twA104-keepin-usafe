@@ -18,9 +18,6 @@
     <ClCompile Include="Programa_alarma.c">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="SerialPort.c">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SerialPort.h">

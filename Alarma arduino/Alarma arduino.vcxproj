@@ -116,7 +116,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Programa_alarma.c" />
-    <ClCompile Include="SerialPort.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SerialPort.h" />
