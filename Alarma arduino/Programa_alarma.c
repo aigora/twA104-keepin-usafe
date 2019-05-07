@@ -1,15 +1,17 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
 #include<malloc.h>
+#include<time.h>
 //Biblioteca comunicación serial arduino
 #include"SerialPort.h"
 
-#define length 16 //Longitud máxima de la contraseña
+#define length 16 //Longitud máxima de la contraseña de la alarma
 #define MAX_DATA_LENGTH 255
 
 //Funciones para comunicacion serial
-	void autoConnect(SerialPort *arduino, char*);
+	void autoConnect(SerialPort *arduino, char*,char*);
 	void Crear_Conexion(SerialPort *PuertoSerie, char *portName);
 	void CerrarConexion(SerialPort * PuertoSerie);
 	int readSerialPort(SerialPort * PuertoSerie, char *buffer, unsigned int buf_size);
@@ -17,12 +19,16 @@
 
 // Funciones prototipo
 	char* Password(); //Función para introducir contraseña con asignación dinámica
+	char* DefinePass(); //Función para definir una contraseña para la alarma
 
 void main()
 {
 	printf("			SISTEMA DE ALARMAS KEEP'N YOU SAFE\n\n");
 	
+	char *pass; //Contraseña de la alarma
+	pass = DefinePass(); //indicamos la contraseña de la alarma
 
+//CONEXION CON ARDUINO
 	//Arduino SerialPort object
 	SerialPort *arduino;
 	// Puerto serie en el que está Arduino
@@ -34,12 +40,12 @@ void main()
 	arduino = (SerialPort *)malloc(sizeof(SerialPort));
 	// Apertura del puerto serie
 	Crear_Conexion(arduino, portName);
-	autoConnect(arduino, incomingData);
+	autoConnect(arduino, incomingData,pass); //Dentro de esta funcion escribiremos la aplicacion
 
 }
 
 
-void autoConnect(SerialPort *arduino, char *incomingData)
+void autoConnect(SerialPort *arduino, char *incomingData, char *pass)
 {
 	char sendData = 0;
 
@@ -52,21 +58,94 @@ void autoConnect(SerialPort *arduino, char *incomingData)
 	//Comprueba si arduino está connectado
 	if (isConnected(arduino))
 	{	
-		printf("Conectado con Arduino en el puerto %s\n", arduino->portName);
+		system("CLS");
+		printf("			SISTEMA DE ALARMAS KEEP'N YOU SAFE\n\n");
+		printf("Conectado con Arduino en el puerto %s\n\n", arduino->portName);
 	}
 	
-	// APLICACIÓN
+	// APLICACIÓN!!
 	while (isConnected(arduino))
 	{
-	
+		
 	}
 
 	if (!isConnected(arduino))
 	{
-		system("CLS");
 		printf("Se ha perdido la conexion con Arduino\n");
 		system("PAUSE");
 	}
+}
+
+char* DefinePass()
+{
+	FILE *filepass;
+	char *pass1,*pass2;
+	int i=0;
+	errno_t err_pass;
+
+	//Asignacion de memoria para la contraseña
+	pass1 = (char*)malloc(sizeof(char)*(length + 1));
+	*pass1 = NULL;
+
+	//Abrimos y leemos archivo de texto donde esta la contraseña
+	err_pass = fopen_s(&filepass, "password.txt", "r");
+	if (err_pass != NULL)
+	{
+		printf("El archivo no se ha abierto corretamente\n");
+		getchar();
+		fclose(filepass);
+		exit(1);
+	}
+
+	//Introducimos en pass1 la contraseña que haya ya definida en el archivo
+	while (feof(filepass) == NULL)
+	{
+		fscanf_s(filepass, "%s", (pass1), _msize(pass1));
+	}
+
+	//Reasignamos memoria para optimizar
+	pass1 = (char*)realloc(pass1, strlen(pass1) + 1);
+	fclose(filepass);
+
+	//Si no habia ninguna contraseña previamente definida, primero la creamos
+	if (*pass1 == NULL)
+	{
+		do
+		{
+			printf("Defina una clave de hasta %d caracteres: ", length);
+			pass1 = Password();
+			printf("Introducela de nuevo: ");
+			pass2 = Password();
+
+			if (strcmp(pass1, pass2) == 0)
+				printf("Clave definida correctamente\n");
+			else
+			{
+				printf("Las claves no coinciden\n");
+				system("PAUSE");
+				system("CLS");
+				printf("			SISTEMA DE ALARMAS KEEP'N YOU SAFE\n\n");
+			}
+		} while (strcmp(pass1, pass2) != 0);
+
+		err_pass = fopen_s(&filepass, "password.txt", "w");
+		if (err_pass != NULL)
+		{
+			printf("El archivo no se ha abierto corretamente\n");
+			system("PAUSE");
+			fclose(filepass);
+			exit(1);
+		}
+
+		fprintf(filepass, "%s", pass1);
+		fclose(filepass);
+		system("PAUSE");
+		system("CLS");
+		return pass1;
+	}
+	//Si ya existia,  la funcion devuelve la contraseña
+	else
+		return pass1;
 }
 
 char* Password()
