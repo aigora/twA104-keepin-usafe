@@ -19,14 +19,14 @@
 
 // Funciones prototipo
 	char* Password(); //Función para introducir contraseña con asignación dinámica
-	char* DefinePass(); //Función para definir una contraseña para la alarma
+	char* DefinePass(int flag); //Función para definir una contraseña para la alarma. Si se quiere cambiar contraseña el flag debe ser 1, si no se pone 0
 
 void main()
 {
 	printf("			SISTEMA DE ALARMAS KEEP'N YOU SAFE\n\n");
 	
 	char *pass; //Contraseña de la alarma
-	pass = DefinePass(); //indicamos la contraseña de la alarma
+	pass = DefinePass(0); //indicamos la contraseña de la alarma
 
 //CONEXION CON ARDUINO
 	//Arduino SerialPort object
@@ -41,7 +41,6 @@ void main()
 	// Apertura del puerto serie
 	Crear_Conexion(arduino, portName);
 	autoConnect(arduino, incomingData,pass); //Dentro de esta funcion escribiremos la aplicacion
-
 }
 
 
@@ -56,27 +55,92 @@ void autoConnect(SerialPort *arduino, char *incomingData, char *pass)
 		Crear_Conexion(arduino, arduino->portName);
 	}
 	//Comprueba si arduino está connectado
-	if (isConnected(arduino))
+	/*if (isConnected(arduino))
 	{	
+	
+		
+	}*/
+	
+	// APLICACIÓN!! (Se ejecuta mientras el arduino esta conectado)
+	while (isConnected(arduino))
+	{	
+		char opc;
+		char *pass_aux;
+
 		system("CLS");
 		printf("			SISTEMA DE ALARMAS KEEP'N YOU SAFE\n\n");
 		printf("Conectado con Arduino en el puerto %s\n\n", arduino->portName);
-	}
-	
-	// APLICACIÓN!!
-	while (isConnected(arduino))
-	{
 		
+		printf("Que desea hacer?\n\n1.Activar alarma\n2.Desactivar alarma\n3.Ver historial de detecciones\n4.Cambiar clave de seguridad\n\n5.Apagar\n\n");
+		do
+		{
+			opc=_getch();
+		} while (opc < '1' && opc>'5');
+
+		switch (opc)
+		{
+			case '1':
+			{
+				
+				break;
+			}
+
+			case '2':
+			{
+				
+				break;
+			}
+
+			case '3':
+			{
+				
+				break;
+			}
+
+			case '4':
+			{
+					printf("\nIntroduce la antigua clave de seguridad: ");
+					pass_aux = Password();
+					if (strcmp(pass, pass_aux) != 0)
+					{
+						printf("Clave incorrecta!\n\n");
+						break;
+					}
+					else
+					{
+						pass = DefinePass(1);
+						break;
+					}
+			}
+
+			case '5':
+			{
+					printf("\nEsta seguro de que que quiere salir? (s/n) ");				
+				do
+				{
+					opc = _getch();
+				} while (opc != 's'&&opc != 'n');
+
+				if (opc == 's')
+				{
+					printf("\nHasta luego!");
+					Sleep(700);
+					exit(0);
+				}
+				else if (opc == 'n')
+					break;
+			}
+		}
 	}
 
 	if (!isConnected(arduino))
 	{
-		printf("Se ha perdido la conexion con Arduino\n");
+		printf("\nSe ha perdido la conexion con Arduino\n");
 		system("PAUSE");
 	}
 }
 
-char* DefinePass()
+char* DefinePass(int flag)
 {
 	FILE *filepass;
 	char *pass1,*pass2;
@@ -95,6 +159,16 @@ char* DefinePass()
 		getchar();
 		fclose(filepass);
 		exit(1);
+	}
+
+	if (flag == 1)
+	{
+		fclose(filepass);
+		err_pass = fopen_s(&filepass, "password.txt", "w");
+		fprintf(filepass,"\0");
+		fclose(filepass);
+		err_pass = fopen_s(&filepass, "password.txt", "r");
+
 	}
 
 	//Introducimos en pass1 la contraseña que haya ya definida en el archivo
@@ -152,7 +226,7 @@ char* Password()
 {
 	char *pass, c = 0;
 	int i;
-	//Asignacion de memoria para los caracteres y '\0'
+	//Asignacion de memoria para la contraseña
 	pass = (char*)malloc((length)+1);
 	if (pass == NULL)
 	{
