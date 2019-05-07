@@ -104,6 +104,7 @@ void autoConnect(SerialPort *arduino, char *incomingData, char *pass)
 					if (strcmp(pass, pass_aux) != 0)
 					{
 						printf("Clave incorrecta!\n\n");
+						getch();
 						break;
 					}
 					else
@@ -161,6 +162,7 @@ char* DefinePass(int flag)
 		exit(1);
 	}
 
+	//Si el flag esta activado, se cambia la contraseña que esta ya puesta
 	if (flag == 1)
 	{
 		fclose(filepass);
@@ -168,10 +170,9 @@ char* DefinePass(int flag)
 		fprintf(filepass,"\0");
 		fclose(filepass);
 		err_pass = fopen_s(&filepass, "password.txt", "r");
-
 	}
 
-	//Introducimos en pass1 la contraseña que haya ya definida en el archivo
+	//Introducimos en pass1 la contraseña que haya definida en el archivo
 	while (feof(filepass) == NULL)
 	{
 		fscanf_s(filepass, "%s", (pass1), _msize(pass1));
