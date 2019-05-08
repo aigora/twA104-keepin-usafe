@@ -93,20 +93,41 @@ void loop()
      distancia=MedirDistancia(Echo);
      Serial.println(distancia);
      delay(50);
-
+     
      //Deteccion de paso
      if(distancia<distancialimite)
-    {
-      SonarAlarma(Zumbador);
-    }
+      { 
+        lcd.clear();
+        lcd.setCursor(0,0);
+        lcd.print("      PASO    ");
+        lcd.setCursor(0,1);
+        lcd.print("   DETECTADO!!    ");
+        while(active!='o')
+        {  
+          digitalWrite(Led[0],LOW);
+          delay(40);
+          digitalWrite(Led[0],HIGH);
+          delay(40);
+          digitalWrite(Led[0],LOW);
+          SonarAlarma(Zumbador);
+          if (Serial.available()>0)
+          {
+            active=Serial.read();
+          }
+        }
+        Serial.println(0);
+        noTone(Zumbador);
+      }
     else
     {
      noTone(Zumbador);
     }
-
-    if (Serial.available() > 0)
+    if(active!='o')
     {
-      active=Serial.read();
+      if (Serial.available() > 0)
+      {
+        active=Serial.read();
+      }
     }
   }
 

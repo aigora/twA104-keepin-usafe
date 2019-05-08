@@ -1,13 +1,15 @@
 ﻿  Programa_alarma.c
-d:\david h\documents\github\twa104-keepin-usafe\alarma arduino\programa_alarma.c(78): warning C4013: '_getch' sin definir; se supone que extern devuelve como resultado int
-d:\david h\documents\github\twa104-keepin-usafe\alarma arduino\programa_alarma.c(150): warning C4013: 'getch' sin definir; se supone que extern devuelve como resultado int
-d:\david h\documents\github\twa104-keepin-usafe\alarma arduino\programa_alarma.c(227): warning C4047: '=': 'char' es distinto en los niveles de direccionamiento indirecto de 'void *'
-d:\david h\documents\github\twa104-keepin-usafe\alarma arduino\programa_alarma.c(231): warning C4047: '!=': 'errno_t' es distinto en los niveles de direccionamiento indirecto de 'void *'
-d:\david h\documents\github\twa104-keepin-usafe\alarma arduino\programa_alarma.c(250): warning C4047: '==': 'int' es distinto en los niveles de direccionamiento indirecto de 'void *'
-d:\david h\documents\github\twa104-keepin-usafe\alarma arduino\programa_alarma.c(252): warning C4477: 'fscanf_s' : la cadena de formato '%s' requiere un argumento de tipo 'unsigned int', pero el argumento variádico 2 tiene el tipo 'size_t'
-  d:\david h\documents\github\twa104-keepin-usafe\alarma arduino\programa_alarma.c(252): note: este argumento se utiliza como un tamaño de búfer
-d:\david h\documents\github\twa104-keepin-usafe\alarma arduino\programa_alarma.c(260): warning C4047: '==': 'int' es distinto en los niveles de direccionamiento indirecto de 'void *'
-d:\david h\documents\github\twa104-keepin-usafe\alarma arduino\programa_alarma.c(281): warning C4047: '!=': 'errno_t' es distinto en los niveles de direccionamiento indirecto de 'void *'
-d:\david h\documents\github\twa104-keepin-usafe\alarma arduino\programa_alarma.c(336): warning C4047: '=': 'char' es distinto en los niveles de direccionamiento indirecto de 'void *'
-d:\david h\documents\github\twa104-keepin-usafe\alarma arduino\programa_alarma.c(356): warning C4047: '=': 'char' es distinto en los niveles de direccionamiento indirecto de 'void *'
+d:\david h\documents\github\twa104-keepin-usafe\alarma arduino\programa_alarma.c(81): warning C4013: '_getch' sin definir; se supone que extern devuelve como resultado int
+d:\david h\documents\github\twa104-keepin-usafe\alarma arduino\programa_alarma.c(153): warning C4013: 'getch' sin definir; se supone que extern devuelve como resultado int
+d:\david h\documents\github\twa104-keepin-usafe\alarma arduino\programa_alarma.c(230): warning C4047: '=': 'char' es distinto en los niveles de direccionamiento indirecto de 'void *'
+d:\david h\documents\github\twa104-keepin-usafe\alarma arduino\programa_alarma.c(234): warning C4047: '!=': 'errno_t' es distinto en los niveles de direccionamiento indirecto de 'void *'
+d:\david h\documents\github\twa104-keepin-usafe\alarma arduino\programa_alarma.c(253): warning C4047: '==': 'int' es distinto en los niveles de direccionamiento indirecto de 'void *'
+d:\david h\documents\github\twa104-keepin-usafe\alarma arduino\programa_alarma.c(255): warning C4477: 'fscanf_s' : la cadena de formato '%s' requiere un argumento de tipo 'unsigned int', pero el argumento variádico 2 tiene el tipo 'size_t'
+  d:\david h\documents\github\twa104-keepin-usafe\alarma arduino\programa_alarma.c(255): note: este argumento se utiliza como un tamaño de búfer
+d:\david h\documents\github\twa104-keepin-usafe\alarma arduino\programa_alarma.c(263): warning C4047: '==': 'int' es distinto en los niveles de direccionamiento indirecto de 'void *'
+d:\david h\documents\github\twa104-keepin-usafe\alarma arduino\programa_alarma.c(284): warning C4047: '!=': 'errno_t' es distinto en los niveles de direccionamiento indirecto de 'void *'
+d:\david h\documents\github\twa104-keepin-usafe\alarma arduino\programa_alarma.c(339): warning C4047: '=': 'char' es distinto en los niveles de direccionamiento indirecto de 'void *'
+d:\david h\documents\github\twa104-keepin-usafe\alarma arduino\programa_alarma.c(359): warning C4047: '=': 'char' es distinto en los niveles de direccionamiento indirecto de 'void *'
+d:\david h\documents\github\twa104-keepin-usafe\alarma arduino\programa_alarma.c(507): warning C4047: '!=': 'errno_t' es distinto en los niveles de direccionamiento indirecto de 'void *'
+d:\david h\documents\github\twa104-keepin-usafe\alarma arduino\programa_alarma.c(514): warning C4047: '==': 'int' es distinto en los niveles de direccionamiento indirecto de 'void *'
   Alarma arduino.vcxproj -> D:\David H\Documents\GitHub\twA104-keepin-usafe\Alarma arduino\x64\Debug\Alarma arduino.exe
