@@ -91,7 +91,6 @@ void loop()
     
      //Medir distancia
      distancia=MedirDistancia(Echo);
-     //Serial.println(distancia);
      delay(50);
      
      //Deteccion de paso
@@ -119,10 +118,7 @@ void loop()
         Serial.println(0);
         noTone(Zumbador);
       }
-    else
-    {
-     noTone(Zumbador);
-    }
+
     if(active!='o')
     {
       if (Serial.available() > 0)
