@@ -8,4 +8,5 @@ David Hergueta Soto (usuario davidherguetasoto) y Guillermo Aparicio Voces (usua
 
 ## Objetivos del trabajo
 
-Lista de los objetivos que se persiguen con el trabajo propuesto.
+Se pretende elaborar una alarma en Arduino que detecte y avise por medio de sonido del paso de un intruso, tendra una forma de activarla a través de contraseña que definirá el usuario al iniciarse y se guardara para la siguiente vez que se active con la posibilidad de cambiarla, llevara un registro de las veces que suene y una forma de ver este registro a traves de un menú.
+Este programa tendra una comunicacion serial entre Visual Studio y Arduino, siendo el hardware en este ultimo y controlandolo desde Visual.
