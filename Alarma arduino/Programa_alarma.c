@@ -70,12 +70,39 @@ void autoConnect(SerialPort *arduino, char *incomingData, char *pass)
 	{
 		char opc;
 		char *pass_aux = NULL;
+		readSerialPort(arduino, incomingData, MAX_DATA_LENGTH); //Lee puerto serie
+
+		if (incomingData[0]=='s') //Si el arduino ha detectado presencia
+		{
+			do
+			{
+				system("CLS");
+				printf("			SISTEMA DE ALARMAS KEEP'N YOU SAFE\n\n");
+				printf("PRESENCIA DETECTADA!\n\nIntroduzca clave para desactivar: ");
+				pass_aux = Password();
+				if (strcmp(pass, pass_aux) != 0)
+				{
+					printf("Clave incorrecta!!\n");
+					printf("Pulse una tecla para continuar");
+					_getch();
+				}
+				else
+				{
+					printf("Clave correcta\nALARMA DESACTIVADA!\n\n");
+					sendData = 'o'; //Desactiva el arduino
+					writeSerialPort(arduino, &sendData, sizeof(char));
+					act = 0; //Flag para indicar que la alarma se ha desactivado
+					printf("Pulse una tecla para continuar");
+					_getch();
+				}
+			} while (strcmp(pass, pass_aux) != 0);
+		}
 
 		system("CLS");
 		printf("			SISTEMA DE ALARMAS KEEP'N YOU SAFE\n\n");
 		printf("Conectado con Arduino en el puerto %s\n\n", arduino->portName);
 
-		printf("Que desea hacer?\n\n1.Activar alarma\n2.Desactivar alarma\n3.Ver historial de detecciones\n4.Cambiar clave de seguridad\n\n5.Apagar\n\n");
+		printf("Que desea hacer?\n\n1.Activar alarma\n2.Desactivar alarma\n3.Ver historial de detecciones\n4.Cambiar clave de seguridad\n\n5.Salir\n\n");
 		do
 		{
 			opc = _getch();
@@ -92,9 +119,9 @@ void autoConnect(SerialPort *arduino, char *incomingData, char *pass)
 
 				if (strcmp(pass_aux, pass) == 0)
 				{
-					printf("Clave correcta\n\n");
+					printf("Clave correcta\nAlarma activa\n\n");
 
-					sendData = 'a';
+					sendData = 'a'; //Activa arduino
 					writeSerialPort(arduino, &sendData, sizeof(char));
 					act = 1; //Flag para indicar que la alarma esta activada
 					printf("Pulse una tecla para continuar");
@@ -119,9 +146,9 @@ void autoConnect(SerialPort *arduino, char *incomingData, char *pass)
 
 				if (strcmp(pass_aux, pass) == 0)
 				{
-					printf("Clave correcta\n\n");
+					printf("Clave correcta\nAlarma desactivada\n\n");
 
-					sendData = 'o';
+					sendData = 'o'; //Desactiva arduino
 					writeSerialPort(arduino, &sendData, sizeof(char));
 					act = 0; //Flag para indicar que la alarma se ha desactivado
 					printf("Pulse una tecla para continuar");
@@ -139,7 +166,9 @@ void autoConnect(SerialPort *arduino, char *incomingData, char *pass)
 
 		case '3':
 		{
-			void registro();
+			registro();
+			printf("\n\nPulse una tecla para continuar");
+			_getch();
 			break;
 		}
 
@@ -186,7 +215,7 @@ void autoConnect(SerialPort *arduino, char *incomingData, char *pass)
 
 						if (strcmp(pass_aux, pass) == 0)
 						{
-							printf("Clave correcta\n\n");
+							printf("Clave correcta\nAlarma desactivada\n\n");
 
 							sendData = 'o';
 							writeSerialPort(arduino, &sendData, sizeof(char));
@@ -503,7 +532,7 @@ void registro() {
 	int num_pal, i;
 	num_pal = 9;
 
-	err1 = fopen_s(&filetime, "time.txt", "r");
+	err1 = fopen_s(&filetime, "history.txt", "r");
 	if (err1 != NULL)
 	{
 		printf("El archivo no se ha abierto corretamente\n");

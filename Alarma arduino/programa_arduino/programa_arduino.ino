@@ -64,7 +64,7 @@ void loop()
   }
   
 //ALARMA ACTIVA
-  if(active=='a')
+  if(active=='a') //Si recibe una 'a' del programa, se activa la alarma
   { 
    //Primero borramos lcd y apagamos LedVerde
    lcd.clear();
@@ -91,12 +91,13 @@ void loop()
     
      //Medir distancia
      distancia=MedirDistancia(Echo);
-     Serial.println(distancia);
+     //Serial.println(distancia);
      delay(50);
      
      //Deteccion de paso
      if(distancia<distancialimite)
       { 
+        Serial.println("s"); //Si detecta presencia, manda una 's' al puerto serie para que la lea el programa
         lcd.clear();
         lcd.setCursor(0,0);
         lcd.print("      PASO    ");
@@ -131,8 +132,7 @@ void loop()
     }
   }
 
-//Si hemos apagado la alarma nosotros, apagar LedRojo y borrar lcd
-  if(active=='o')
+  if(active=='o')  //Si recibe del puerto serie una 'o' desactiva la alarma
   {
    lcd.clear();
    digitalWrite(Led[0],LOW);
