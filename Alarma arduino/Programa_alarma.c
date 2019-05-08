@@ -4,10 +4,10 @@
 #include<string.h>
 #include<malloc.h>
 #include<time.h>
-//Biblioteca comunicación serial arduino
+//Biblioteca comunicaciÃ³n serial arduino
 #include"SerialPort.h"
 
-#define length 16 //Longitud máxima permitida en la clave de seguridad de la alarma
+#define length 16 //Longitud mÃ¡xima permitida en la clave de seguridad de la alarma
 #define MAX_DATA_LENGTH 255
 
 //Funciones para comunicacion serial
@@ -18,20 +18,21 @@ int readSerialPort(SerialPort * PuertoSerie, char *buffer, unsigned int buf_size
 int writeSerialPort(SerialPort *PuertoSerie, char *buffer, unsigned int buf_size);
 
 // Funciones prototipo
-char* Password(); //Función para introducir contraseña con asignación dinámica
-char* DefinePass(int flag); //Función para definir una contraseña para la alarma. Si se quiere cambiar contraseña el flag debe ser 1, si no se pone 0
+char* Password(); //FunciÃ³n para introducir contraseÃ±a con asignaciÃ³n dinÃ¡mica
+char* DefinePass(int flag); //FunciÃ³n para definir una contraseÃ±a para la alarma. Si se quiere cambiar contraseÃ±a el flag debe ser 1, si no se pone 0
+void registro();
 
 void main()
 {
-	char *pass; //Contraseña de la alarma
+	char *pass; //ContraseÃ±a de la alarma
 
 	printf("			SISTEMA DE ALARMAS KEEP'N YOU SAFE\n\n");
-	pass = DefinePass(0); //indicamos la contraseña de la alarma
+	pass = DefinePass(0); //indicamos la contraseÃ±a de la alarma
 
 //CONEXION CON ARDUINO
 	//Arduino SerialPort object
 	SerialPort *arduino;
-	// Puerto serie en el que está Arduino
+	// Puerto serie en el que estÃ¡ Arduino
 	char* portName = "COM5";
 	// Buffer para datos procedentes de Arduino
 	char incomingData[MAX_DATA_LENGTH];
@@ -49,13 +50,13 @@ void autoConnect(SerialPort *arduino, char *incomingData, char *pass)
 	char sendData = 0;
 	int act = 0; //Flag que se activa cuando la alarma esta activada
 
-	// Espera la conexión con Arduino
+	// Espera la conexiÃ³n con Arduino
 	while (!isConnected(arduino))
 	{
 		Sleep(100);
 		Crear_Conexion(arduino, arduino->portName);
 	}
-	//Comprueba si arduino está connectado
+	//Comprueba si arduino estÃ¡ connectado
 	if (isConnected(arduino))
 	{
 		system("CLS");
@@ -64,7 +65,7 @@ void autoConnect(SerialPort *arduino, char *incomingData, char *pass)
 		Sleep(7000);
 	}
 
-	// APLICACIÓN!! (Se ejecuta mientras el arduino esta conectado)
+	// APLICACIÃ“N!! (Se ejecuta mientras el arduino esta conectado)
 	while (isConnected(arduino))
 	{
 		char opc;
@@ -138,7 +139,7 @@ void autoConnect(SerialPort *arduino, char *incomingData, char *pass)
 
 		case '3':
 		{
-
+			void registro();
 			break;
 		}
 
@@ -224,11 +225,11 @@ char* DefinePass(int flag)
 	int i = 0;
 	errno_t err_pass;
 
-	//Asignacion de memoria para la contraseña
+	//Asignacion de memoria para la contraseÃ±a
 	pass1 = (char*)malloc(sizeof(char)*(length + 1));
 	*pass1 = NULL;
 
-	//Abrimos y leemos archivo de texto donde esta la contraseña
+	//Abrimos y leemos archivo de texto donde esta la contraseÃ±a
 	err_pass = fopen_s(&filepass, "password.txt", "r");
 	if (err_pass != NULL)
 	{
@@ -238,7 +239,7 @@ char* DefinePass(int flag)
 		exit(1);
 	}
 
-	//Si el flag esta activado, se cambia la contraseña que esta ya puesta
+	//Si el flag esta activado, se cambia la contraseÃ±a que esta ya puesta
 	if (flag == 1)
 	{
 		fclose(filepass);
@@ -248,7 +249,7 @@ char* DefinePass(int flag)
 		err_pass = fopen_s(&filepass, "password.txt", "r");
 	}
 
-	//Introducimos en pass1 la contraseña que haya definida en el archivo
+	//Introducimos en pass1 la contraseÃ±a que haya definida en el archivo
 	while (feof(filepass) == NULL)
 	{
 		fscanf_s(filepass, "%s", (pass1), _msize(pass1));
@@ -258,7 +259,7 @@ char* DefinePass(int flag)
 	pass1 = (char*)realloc(pass1, strlen(pass1) + 1);
 	fclose(filepass);
 
-	//Si no habia ninguna contraseña previamente definida, primero la creamos
+	//Si no habia ninguna contraseÃ±a previamente definida, primero la creamos
 	if (*pass1 == NULL)
 	{
 		do
@@ -294,7 +295,7 @@ char* DefinePass(int flag)
 		system("CLS");
 		return pass1;
 	}
-	//Si ya existia una contraseña creada,  la funcion la devuelve
+	//Si ya existia una contraseÃ±a creada,  la funcion la devuelve
 	else
 		return pass1;
 }
@@ -303,7 +304,7 @@ char* Password()
 {
 	char *pass, c = 0;
 	int i;
-	//Asignacion de memoria para la contraseña
+	//Asignacion de memoria para la contraseÃ±a
 	pass = (char*)malloc((length)+1);
 	if (pass == NULL)
 	{
@@ -319,7 +320,7 @@ char* Password()
 
 		while (c != 13) //Si no presionamos intro
 		{
-			if (i < (length + 1)) //Si la contraseña cabe en la cadena, se va introduciendo
+			if (i < (length + 1)) //Si la contraseÃ±a cabe en la cadena, se va introduciendo
 			{
 				c = _getch();
 
@@ -344,7 +345,7 @@ char* Password()
 					continue;
 				}
 			}
-			else //Si no entra siemplemente se imprimen los *, luego te mandara repetir contraseña
+			else //Si no entra siemplemente se imprimen los *, luego te mandara repetir contraseÃ±a
 			{
 				c = _getch();
 				if (c != 8 && c != 13)
@@ -386,7 +387,7 @@ char* Password()
 
 	//Reasignacion de memoria para optimizar
 	pass = (char*)realloc(pass, i * sizeof(char) + 1);
-	return pass; //Devuelve el puntero de la contraseña
+	return pass; //Devuelve el puntero de la contraseÃ±a
 }
 
 
@@ -494,4 +495,32 @@ int isConnected(SerialPort *PuertoSerie)
 	if (!ClearCommError(PuertoSerie->handler, &PuertoSerie->errors, &PuertoSerie->status))
 		PuertoSerie->connected = 0;
 	return PuertoSerie->connected;
+}
+void registro() {
+	FILE *filetime;
+	errno_t err1;
+	char fecha[20];
+	int num_pal, i;
+	num_pal = 9;
+
+	err1 = fopen_s(&filetime, "time.txt", "r");
+	if (err1 != NULL)
+	{
+		printf("El archivo no se ha abierto corretamente\n");
+		getchar();
+		fclose(filetime);
+		exit(1);
+	}
+	while (feof(filetime) == NULL)
+	{
+		for (i = 1; i < num_pal; i++)
+		{
+			fscanf_s(filetime, "%s ", fecha, 20);
+			printf("%s ", fecha);
+		}
+
+		fscanf_s(filetime, "%s ", fecha, 20);
+		printf("%s\n", fecha);
+	}
+	fclose(filetime);
 }
