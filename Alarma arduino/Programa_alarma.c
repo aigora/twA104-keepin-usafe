@@ -23,9 +23,9 @@
 
 void main()
 {
-	printf("			SISTEMA DE ALARMAS KEEP'N YOU SAFE\n\n");
-	
 	char *pass; //Contraseña de la alarma
+
+	printf("			SISTEMA DE ALARMAS KEEP'N YOU SAFE\n\n");
 	pass = DefinePass(0); //indicamos la contraseña de la alarma
 
 //CONEXION CON ARDUINO
@@ -47,6 +47,7 @@ void main()
 void autoConnect(SerialPort *arduino, char *incomingData, char *pass)
 {
 	char sendData = 0;
+	int act=0; //Flag que se activa cuando la alarma esta activada
 
 	// Espera la conexión con Arduino
 	while (!isConnected(arduino))
@@ -55,22 +56,24 @@ void autoConnect(SerialPort *arduino, char *incomingData, char *pass)
 		Crear_Conexion(arduino, arduino->portName);
 	}
 	//Comprueba si arduino está connectado
-	/*if (isConnected(arduino))
+	if (isConnected(arduino))
 	{	
-	
-		
-	}*/
+		system("CLS");
+		printf("			SISTEMA DE ALARMAS KEEP'N YOU SAFE\n\n");
+		printf("Conectado con Arduino en el puerto %s\n\n", arduino->portName);
+		Sleep(7000);
+	}
 	
 	// APLICACIÓN!! (Se ejecuta mientras el arduino esta conectado)
 	while (isConnected(arduino))
 	{	
-		char opc;
-		char *pass_aux;
+		char opc; 
+		char *pass_aux=NULL;
 
 		system("CLS");
 		printf("			SISTEMA DE ALARMAS KEEP'N YOU SAFE\n\n");
 		printf("Conectado con Arduino en el puerto %s\n\n", arduino->portName);
-		
+
 		printf("Que desea hacer?\n\n1.Activar alarma\n2.Desactivar alarma\n3.Ver historial de detecciones\n4.Cambiar clave de seguridad\n\n5.Apagar\n\n");
 		do
 		{
@@ -81,13 +84,55 @@ void autoConnect(SerialPort *arduino, char *incomingData, char *pass)
 		{
 			case '1':
 			{
-				
+				if (act != 1)
+				{
+					printf("Introduzca la clave de seguridad: ");
+					pass_aux = Password();
+
+					if (strcmp(pass_aux, pass) == 0)
+					{
+						printf("Clave correcta\n\n");
+
+						sendData = 'a';
+						writeSerialPort(arduino, &sendData, sizeof(char));
+						act = 1; //Flag para indicar que la alarma esta activada
+						printf("Pulse una tecla para continuar");
+						_getch();
+					}
+					else
+					{
+						printf("Clave incorrecta\n\n");
+						printf("Pulse una tecla para continuar");
+						_getch();
+					}
+				}
 				break;
 			}
 
 			case '2':
 			{
-				
+				if (act != 0)
+				{
+					printf("Introduzca la clave de seguridad: ");
+					pass_aux = Password();
+
+					if (strcmp(pass_aux, pass) == 0)
+					{
+						printf("Clave correcta\n\n");
+
+						sendData = 'o';
+						writeSerialPort(arduino, &sendData, sizeof(char));
+						act = 0; //Flag para indicar que la alarma se ha desactivado
+						printf("Pulse una tecla para continuar");
+						_getch();
+					}
+					else
+					{
+						printf("Clave incorrecta\n\n");
+						printf("Pulse una tecla para continuar");
+						_getch();
+					}
+				}
 				break;
 			}
 
@@ -116,7 +161,7 @@ void autoConnect(SerialPort *arduino, char *incomingData, char *pass)
 
 			case '5':
 			{
-					printf("\nEsta seguro de que que quiere salir? (s/n) ");				
+					printf("Esta seguro de que que quiere salir? (s/n) ");				
 				do
 				{
 					opc = _getch();
@@ -124,6 +169,37 @@ void autoConnect(SerialPort *arduino, char *incomingData, char *pass)
 
 				if (opc == 's')
 				{
+					opc = 0;
+					if(act==1)
+					{ 
+						printf("\nDesactivar alarma?(s/n) ");
+						do
+						{
+							opc = _getch();
+						} while (opc != 's'&&opc != 'n');
+
+						if (opc == 's')
+						{
+							printf("\n\nIntroduzca la clave de seguridad: ");
+							pass_aux = Password();
+
+							if (strcmp(pass_aux, pass) == 0)
+							{
+								printf("Clave correcta\n\n");
+
+								sendData = 'o';
+								writeSerialPort(arduino, &sendData, sizeof(char));
+								act = 0;
+							}
+							else
+							{
+								printf("\nClave incorrecta\n");
+								printf("Pulse una tecla para continuar");
+								_getch();
+								break;
+							}
+						}
+					}
 					printf("\nHasta luego!");
 					Sleep(700);
 					exit(0);

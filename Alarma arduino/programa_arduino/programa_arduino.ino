@@ -57,7 +57,11 @@ void loop()
   lcd.setCursor(0,1);
   lcd.print("  DESACTIVADA    ");
   digitalWrite(Led[1],HIGH);
-  active=Serial.read();
+
+  if (Serial.available()>0)
+  {
+   active=Serial.read();
+  }
   
 //ALARMA ACTIVA
   if(active=='a')
@@ -99,7 +103,11 @@ void loop()
     {
      noTone(Zumbador);
     }
-    active=Serial.read();
+
+    if (Serial.available() > 0)
+    {
+      active=Serial.read();
+    }
   }
 
 //Si hemos apagado la alarma nosotros, apagar LedRojo y borrar lcd

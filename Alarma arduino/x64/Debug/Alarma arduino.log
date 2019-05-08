@@ -1,13 +1,13 @@
 ﻿  Programa_alarma.c
-d:\david h\documents\github\twa104-keepin-usafe\alarma arduino\programa_alarma.c(77): warning C4013: '_getch' sin definir; se supone que extern devuelve como resultado int
-d:\david h\documents\github\twa104-keepin-usafe\alarma arduino\programa_alarma.c(107): warning C4013: 'getch' sin definir; se supone que extern devuelve como resultado int
-d:\david h\documents\github\twa104-keepin-usafe\alarma arduino\programa_alarma.c(153): warning C4047: '=': 'char' es distinto en los niveles de direccionamiento indirecto de 'void *'
-d:\david h\documents\github\twa104-keepin-usafe\alarma arduino\programa_alarma.c(157): warning C4047: '!=': 'errno_t' es distinto en los niveles de direccionamiento indirecto de 'void *'
-d:\david h\documents\github\twa104-keepin-usafe\alarma arduino\programa_alarma.c(176): warning C4047: '==': 'int' es distinto en los niveles de direccionamiento indirecto de 'void *'
-d:\david h\documents\github\twa104-keepin-usafe\alarma arduino\programa_alarma.c(178): warning C4477: 'fscanf_s' : la cadena de formato '%s' requiere un argumento de tipo 'unsigned int', pero el argumento variádico 2 tiene el tipo 'size_t'
-  d:\david h\documents\github\twa104-keepin-usafe\alarma arduino\programa_alarma.c(178): note: este argumento se utiliza como un tamaño de búfer
-d:\david h\documents\github\twa104-keepin-usafe\alarma arduino\programa_alarma.c(186): warning C4047: '==': 'int' es distinto en los niveles de direccionamiento indirecto de 'void *'
-d:\david h\documents\github\twa104-keepin-usafe\alarma arduino\programa_alarma.c(207): warning C4047: '!=': 'errno_t' es distinto en los niveles de direccionamiento indirecto de 'void *'
-d:\david h\documents\github\twa104-keepin-usafe\alarma arduino\programa_alarma.c(262): warning C4047: '=': 'char' es distinto en los niveles de direccionamiento indirecto de 'void *'
-d:\david h\documents\github\twa104-keepin-usafe\alarma arduino\programa_alarma.c(282): warning C4047: '=': 'char' es distinto en los niveles de direccionamiento indirecto de 'void *'
+d:\david h\documents\github\twa104-keepin-usafe\alarma arduino\programa_alarma.c(80): warning C4013: '_getch' sin definir; se supone que extern devuelve como resultado int
+d:\david h\documents\github\twa104-keepin-usafe\alarma arduino\programa_alarma.c(152): warning C4013: 'getch' sin definir; se supone que extern devuelve como resultado int
+d:\david h\documents\github\twa104-keepin-usafe\alarma arduino\programa_alarma.c(229): warning C4047: '=': 'char' es distinto en los niveles de direccionamiento indirecto de 'void *'
+d:\david h\documents\github\twa104-keepin-usafe\alarma arduino\programa_alarma.c(233): warning C4047: '!=': 'errno_t' es distinto en los niveles de direccionamiento indirecto de 'void *'
+d:\david h\documents\github\twa104-keepin-usafe\alarma arduino\programa_alarma.c(252): warning C4047: '==': 'int' es distinto en los niveles de direccionamiento indirecto de 'void *'
+d:\david h\documents\github\twa104-keepin-usafe\alarma arduino\programa_alarma.c(254): warning C4477: 'fscanf_s' : la cadena de formato '%s' requiere un argumento de tipo 'unsigned int', pero el argumento variádico 2 tiene el tipo 'size_t'
+  d:\david h\documents\github\twa104-keepin-usafe\alarma arduino\programa_alarma.c(254): note: este argumento se utiliza como un tamaño de búfer
+d:\david h\documents\github\twa104-keepin-usafe\alarma arduino\programa_alarma.c(262): warning C4047: '==': 'int' es distinto en los niveles de direccionamiento indirecto de 'void *'
+d:\david h\documents\github\twa104-keepin-usafe\alarma arduino\programa_alarma.c(283): warning C4047: '!=': 'errno_t' es distinto en los niveles de direccionamiento indirecto de 'void *'
+d:\david h\documents\github\twa104-keepin-usafe\alarma arduino\programa_alarma.c(338): warning C4047: '=': 'char' es distinto en los niveles de direccionamiento indirecto de 'void *'
+d:\david h\documents\github\twa104-keepin-usafe\alarma arduino\programa_alarma.c(358): warning C4047: '=': 'char' es distinto en los niveles de direccionamiento indirecto de 'void *'
   Alarma arduino.vcxproj -> D:\David H\Documents\GitHub\twA104-keepin-usafe\Alarma arduino\x64\Debug\Alarma arduino.exe
