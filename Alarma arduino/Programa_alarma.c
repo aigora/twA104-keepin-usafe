@@ -20,7 +20,9 @@ int writeSerialPort(SerialPort *PuertoSerie, char *buffer, unsigned int buf_size
 // Funciones prototipo
 char* Password(); //Función para introducir contraseña con asignación dinámica
 char* DefinePass(int flag); //Función para definir una contraseña para la alarma. Si se quiere cambiar contraseña el flag debe ser 1, si no se pone 0
-void registro();
+void registro();//Funcion para ver cuando se activo la alarma
+void fecha();//Funcion para poner cuando se activa la alarma en un txt
+
 
 void main()
 {
@@ -551,5 +553,24 @@ void registro() {
 		fscanf_s(filetime, "%s ", fecha, 20);
 		printf("%s\n", fecha);
 	}
+	fclose(filetime);
+}
+void fecha() {
+	time_t current_time;
+	FILE *filetime;
+	int i = 0;
+	errno_t err1;
+
+	err1 = fopen_s(&filetime, "time.txt", "a");//No hace falta crear el archivo previamente dado que "a" lo crea
+	if (err1 != NULL)
+	{
+		printf("El archivo no se ha abierto corretamente\n");
+		getchar();
+		fclose(filetime);
+		exit(1);
+	}
+	current_time = time(NULL);
+	fprintf(filetime, "La alarma se activo: %s", ctime(&current_time));
+	printf("La alarma se activo: %s", ctime(&current_time));
 	fclose(filetime);
 }
