@@ -275,8 +275,21 @@ char* DefinePass(int flag)
 
 	//Asignacion de memoria para la contraseña
 	pass1 = (char*)malloc(sizeof(char)*(length + 1));
+	if (pass1 == NULL)
+	{
+		printf("No hay memoria disponible\n");
+		system("PAUSE");
+		exit(1);
+	}
 	*pass1 = NULL;
+
 	pass_aux = (char*)malloc(sizeof(char)*(length + 1));
+	if (pass_aux == NULL)
+	{
+		printf("No hay memoria disponible\n");
+		system("PAUSE");
+		exit(1);
+	}
 	*pass_aux = NULL;
 
 	//Abrimos y leemos archivo de texto donde esta la contraseña
@@ -284,8 +297,10 @@ char* DefinePass(int flag)
 	if (err_pass != NULL)
 	{
 		printf("El archivo no se ha abierto corretamente\n");
-		getchar();
+		_getch();
 		fclose(filepass);
+		free(pass1);
+		free(pass_aux);
 		exit(1);
 	}
 
@@ -339,6 +354,8 @@ char* DefinePass(int flag)
 			if (flag == 1 && strcmp(pass1, pass2) != 0)
 			{
 				strcpy(pass1, pass_aux);
+				free(pass2);
+				free(pass_aux);
 				break;
 			}
 		} while (strcmp(pass1, pass2) != 0);
@@ -350,6 +367,7 @@ char* DefinePass(int flag)
 			printf("Pulse una tecla para continuar");
 			_getch();
 			fclose(filepass);
+			free(pass1);
 			exit(1);
 		}
 
@@ -357,8 +375,11 @@ char* DefinePass(int flag)
 		fclose(filepass);
 		if (strcmp(pass1, pass2) == 0)
 		{
+			if (flag == 1)
+				free(pass_aux);
 			printf("Pulse una tecla para continuar");
 			_getch();
+			free(pass2);
 			system("CLS");
 		}
 		return pass1;
