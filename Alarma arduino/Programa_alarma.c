@@ -201,7 +201,7 @@ void Alarm(int flag, SerialPort *arduino, char *pass,char *pass_aux, int *act)
 			if (strcmp(pass_aux, pass) == 0)
 			{
 				printf("Clave correcta\nAlarma activa\n\n");
-				void fecha(1);
+				fecha(1);
 
 				sendData = 'a'; //Activa arduino
 				writeSerialPort(arduino, &sendData, sizeof(char));
@@ -221,7 +221,7 @@ void Alarm(int flag, SerialPort *arduino, char *pass,char *pass_aux, int *act)
 		if (strcmp(pass_aux, pass) == 0)
 		{
 			printf("Clave correcta\nAlarma desactivada\n\n");
-			void fecha(2);
+			fecha(2);
 
 			sendData = 'o'; //Desactiva arduino
 			writeSerialPort(arduino, &sendData, sizeof(char));
@@ -244,7 +244,7 @@ void Alarm(int flag, SerialPort *arduino, char *pass,char *pass_aux, int *act)
 				system("CLS");
 				printf("			SISTEMA DE ALARMAS KEEP'N YOU SAFE\n\n");
 				printf("PRESENCIA DETECTADA!\n\nIntroduzca clave para desactivar: ");
-				void fecha(3);
+				fecha(3);
 				pass_aux = Password();
 				if (strcmp(pass, pass_aux) != 0)
 				{
@@ -255,7 +255,7 @@ void Alarm(int flag, SerialPort *arduino, char *pass,char *pass_aux, int *act)
 				else
 				{
 					printf("Clave correcta\nALARMA DESACTIVADA!\n\n");
-					void fecha(2);
+					fecha(2);
 					sendData = 'o'; //Desactiva el arduino
 					writeSerialPort(arduino, &sendData, sizeof(char));
 					*act = 0; //Flag para indicar que la alarma se ha desactivado
@@ -462,7 +462,7 @@ void fecha(int flag) {
 	time_t current_time;
 	FILE *filetime;
 	errno_t err1;
-	err1 = fopen_s(&filetime, "time.txt", "a");
+	err1 = fopen_s(&filetime, "history.txt", "a");
 	if (err1 != NULL)
 	{
 		printf("El archivo no se ha abierto corretamente\n");
