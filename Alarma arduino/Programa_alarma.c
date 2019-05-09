@@ -509,8 +509,11 @@ void fecha(int flag) {
 void registro() {
 	FILE *filetime;
 	errno_t err1;
-	char fecha[15];
-	int num_pal=9, i;
+	char *fecha;
+	int num_pal=9, i,espacio=0;
+	
+	fecha = (char*)malloc(sizeof(char)*(15));
+	*fecha = NULL;
 
 	err1 = fopen_s(&filetime, "history.txt", "r");
 	if (err1 != NULL)
@@ -521,16 +524,24 @@ void registro() {
 		exit(1);
 	}
 	while (feof(filetime) == NULL)
+{
+	for (i = 1; i < num_pal; i++)
 	{
-		for (i = 1; i < num_pal; i++)
+		fscanf_s(filetime, "%s ", fecha,_msize(fecha));
+		printf("%s ", fecha);
+		if (*fecha=='d' && *(fecha+2)=='s')
 		{
-			fscanf_s(filetime, "%s ", fecha, 15);
-			printf("%s ", fecha);
+			espacio = 1;
 		}
-
-		fscanf_s(filetime, "%s ", fecha, 15);
-		printf("%s\n", fecha);
 	}
+	fscanf_s(filetime, "%s ", fecha, _msize(fecha));
+	printf("%s\n", fecha);
+	if (espacio==1)
+	{
+		printf("\n");
+		espacio = 0;
+	}
+}
 	fclose(filetime);
 	printf("\n\nPulse una tecla para continuar");
 	_getch();
