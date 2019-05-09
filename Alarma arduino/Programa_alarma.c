@@ -433,6 +433,60 @@ char* Password()
 	return pass; //Devuelve el puntero de la contraseña
 }
 
+int isConnected(SerialPort *PuertoSerie)
+{
+	if (!ClearCommError(PuertoSerie->handler, &PuertoSerie->errors, &PuertoSerie->status))
+		PuertoSerie->connected = 0;
+	return PuertoSerie->connected;
+}
+void fecha() {
+	time_t current_time;
+	FILE *filetime;
+	int i = 0;
+	errno_t err1;
+
+	err1 = fopen_s(&filetime, "history.txt", "a");
+	if (err1 != NULL)
+	{
+		printf("El archivo no se ha abierto corretamente\n");
+		getchar();
+		fclose(filetime);
+		exit(1);
+	}
+	current_time = time(NULL);
+	fprintf(filetime, "La alarma se activo: %s", ctime(&current_time));
+	printf("La alarma se activo: %s", ctime(&current_time));
+	fclose(filetime);
+}
+void registro() {
+	FILE *filetime;
+	errno_t err1;
+	char fecha[20];
+	int num_pal, i;
+	num_pal = 9;
+
+	err1 = fopen_s(&filetime, "history.txt", "r");
+	if (err1 != NULL)
+	{
+		printf("El archivo no se ha abierto corretamente\n");
+		getchar();
+		fclose(filetime);
+		exit(1);
+	}
+	while (feof(filetime) == NULL)
+	{
+		for (i = 1; i < num_pal; i++)
+		{
+			fscanf_s(filetime, "%s ", fecha, 20);
+			printf("%s ", fecha);
+		}
+
+		fscanf_s(filetime, "%s ", fecha, 20);
+		printf("%s\n", fecha);
+	}
+	fclose(filetime);
+}
+
 
 //Funciones para la comunicacion serial
 void Crear_Conexion(SerialPort *PuertoSerie, char *portName)
@@ -531,58 +585,4 @@ int writeSerialPort(SerialPort *PuertoSerie, char *buffer, unsigned int buf_size
 		return 0;
 	}
 	else return 1;
-}
-
-int isConnected(SerialPort *PuertoSerie)
-{
-	if (!ClearCommError(PuertoSerie->handler, &PuertoSerie->errors, &PuertoSerie->status))
-		PuertoSerie->connected = 0;
-	return PuertoSerie->connected;
-}
-void fecha() {
-	time_t current_time;
-	FILE *filetime;
-	int i = 0;
-	errno_t err1;
-
-	err1 = fopen_s(&filetime, "history.txt", "a");
-	if (err1 != NULL)
-	{
-		printf("El archivo no se ha abierto corretamente\n");
-		getchar();
-		fclose(filetime);
-		exit(1);
-	}
-	current_time = time(NULL);
-	fprintf(filetime, "La alarma se activo: %s", ctime(&current_time));
-	printf("La alarma se activo: %s", ctime(&current_time));
-	fclose(filetime);
-}
-void registro() {
-	FILE *filetime;
-	errno_t err1;
-	char fecha[20];
-	int num_pal, i;
-	num_pal = 9;
-
-	err1 = fopen_s(&filetime, "history.txt", "r");
-	if (err1 != NULL)
-	{
-		printf("El archivo no se ha abierto corretamente\n");
-		getchar();
-		fclose(filetime);
-		exit(1);
-	}
-	while (feof(filetime) == NULL)
-	{
-		for (i = 1; i < num_pal; i++)
-		{
-			fscanf_s(filetime, "%s ", fecha, 20);
-			printf("%s ", fecha);
-		}
-
-		fscanf_s(filetime, "%s ", fecha, 20);
-		printf("%s\n", fecha);
-	}
-	fclose(filetime);
 }
