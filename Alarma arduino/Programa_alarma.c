@@ -90,6 +90,12 @@ void autoConnect(SerialPort *arduino, char *incomingData, char *pass)
 		printf("Que desea hacer?\n\n1.Activar alarma\n2.Desactivar alarma\n3.Ver historial de detecciones\n4.Cambiar clave de seguridad\n\n5.Salir\n\n");
 		opc = _getch();
 
+		//Si el arduino ha sido desconectado, se para el programa
+		if (!isConnected(arduino))
+		{
+			break;
+		}
+
 		readSerialPort(arduino, incomingData, MAX_DATA_LENGTH); //Lee puerto serie
 		if (incomingData[0] == 's') //Si el arduino ha detectado presencia
 		{
@@ -144,7 +150,7 @@ void autoConnect(SerialPort *arduino, char *incomingData, char *pass)
 
 			case '5':
 			{
-				printf("Esta seguro de que que quiere salir? (s/n) ");
+				printf("Esta seguro de que que quiere salir? (s/n)\n\n");
 				do
 				{
 					opc = _getch();
@@ -152,23 +158,20 @@ void autoConnect(SerialPort *arduino, char *incomingData, char *pass)
 					
 				if (opc == 's')
 				{
-					opc = 0;
-					if (act == 1)
+					if (act != 0)
 					{
-						printf("\nDesactivar alarma?(s/n)\n");
-						do
-						{
-							opc = _getch();
-						} while (opc != 's'&&opc != 'n');
-
-						if (opc == 's')
-						{
-							Alarm(OFF, arduino, pass,pass_aux,&act);
-						}
+						printf("Desactive primero la alarma\n");
+						Alarm(OFF, arduino, pass, pass_aux, &act);
 					}
-					printf("\nHasta luego!");
-					Sleep(700);
-					exit(0);
+					
+					if (act == 0)
+					{
+						printf("\nHasta luego!");
+						Sleep(700);
+						exit(0);
+					}
+					else
+						break;
 				}
 				else if (opc == 'n')
 					break;
