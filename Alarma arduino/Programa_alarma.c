@@ -264,13 +264,15 @@ void Alarm(int flag, SerialPort *arduino, char *pass,char *pass_aux, int *act)
 char* DefinePass(int flag)
 {
 	FILE *filepass;
-	char *pass1, *pass2;
+	char *pass1, *pass2,*pass_aux;
 	int i = 0;
 	errno_t err_pass;
 
 	//Asignacion de memoria para la contraseña
 	pass1 = (char*)malloc(sizeof(char)*(length + 1));
 	*pass1 = NULL;
+	pass_aux = (char*)malloc(sizeof(char)*(length + 1));
+	*pass_aux = NULL;
 
 	//Abrimos y leemos archivo de texto donde esta la contraseña
 	err_pass = fopen_s(&filepass, "password.txt", "r");
@@ -285,6 +287,11 @@ char* DefinePass(int flag)
 	//Si el flag esta activado, se cambia la contraseña que esta ya puesta
 	if (flag == 1)
 	{
+		//Primero escribimos la clave que ya hay en un pass_auxiliar
+		while (feof(filepass) == NULL)
+		{
+			fscanf_s(filepass, "%s", (pass_aux), _msize(pass_aux));
+		}
 		fclose(filepass);
 		err_pass = fopen_s(&filepass, "password.txt", "w");
 		fprintf(filepass, "\0");
@@ -317,9 +324,17 @@ char* DefinePass(int flag)
 			else
 			{
 				printf("Las claves no coinciden\n");
-				system("PAUSE");
+				printf("Pulse una tecla para continuar");
+				_getch();
 				system("CLS");
 				printf("			SISTEMA DE ALARMAS KEEP'N YOU SAFE\n\n");
+			}
+
+			//Si queriamos cambiar la clave y no coincide, ponemos la que habiamos grabado en el pass_auxiliar
+			if (flag == 1 && strcmp(pass1, pass2) != 0)
+			{
+				strcpy(pass1, pass_aux);
+				break;
 			}
 		} while (strcmp(pass1, pass2) != 0);
 
@@ -327,15 +342,20 @@ char* DefinePass(int flag)
 		if (err_pass != NULL)
 		{
 			printf("El archivo no se ha abierto corretamente\n");
-			system("PAUSE");
+			printf("Pulse una tecla para continuar");
+			_getch();
 			fclose(filepass);
 			exit(1);
 		}
 
 		fprintf(filepass, "%s", pass1);
 		fclose(filepass);
-		system("PAUSE");
-		system("CLS");
+		if (strcmp(pass1, pass2) == 0)
+		{
+			printf("Pulse una tecla para continuar");
+			_getch();
+			system("CLS");
+		}
 		return pass1;
 	}
 	//Si ya existia una contraseña creada,  la funcion la devuelve
@@ -433,12 +453,6 @@ char* Password()
 	return pass; //Devuelve el puntero de la contraseña
 }
 
-int isConnected(SerialPort *PuertoSerie)
-{
-	if (!ClearCommError(PuertoSerie->handler, &PuertoSerie->errors, &PuertoSerie->status))
-		PuertoSerie->connected = 0;
-	return PuertoSerie->connected;
-}
 void fecha() {
 	time_t current_time;
 	FILE *filetime;
@@ -550,6 +564,13 @@ void CerrarConexion(SerialPort * PuertoSerie)
 		PuertoSerie->connected = 0;
 		CloseHandle(PuertoSerie->handler);
 	}
+}
+
+int isConnected(SerialPort *PuertoSerie)
+{
+	if (!ClearCommError(PuertoSerie->handler, &PuertoSerie->errors, &PuertoSerie->status))
+		PuertoSerie->connected = 0;
+	return PuertoSerie->connected;
 }
 
 int readSerialPort(SerialPort * PuertoSerie, char *buffer, unsigned int buf_size)
