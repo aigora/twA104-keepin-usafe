@@ -52,7 +52,6 @@ void main()
 
 void autoConnect(SerialPort *arduino, char *incomingData, char *pass)
 {
-	char sendData = 0;
 	int act = 0; //Flag que se activa cuando la alarma esta activada
 
 	// Espera la conexión con Arduino
