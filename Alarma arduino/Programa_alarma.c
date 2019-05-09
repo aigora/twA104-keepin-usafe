@@ -375,8 +375,7 @@ char* DefinePass(int flag)
 		fclose(filepass);
 		if (strcmp(pass1, pass2) == 0)
 		{
-			if (flag == 1)
-				free(pass_aux);
+			free(pass_aux);
 			printf("Pulse una tecla para continuar");
 			_getch();
 			free(pass2);
