@@ -24,7 +24,7 @@ int writeSerialPort(SerialPort *PuertoSerie, char *buffer, unsigned int buf_size
 char* Password(); //Función para introducir contraseña con asignación dinámica
 char* DefinePass(int flag); //Función para definir una contraseña para la alarma. Si se quiere cambiar contraseña el flag debe ser 1, si no se pone 0
 void registro();//Funcion para ver cuando se activo la alarma
-void fecha(int);//Funcion para escribir cuando se activa(1), desactiva(2) y detecta(3) la alarma en un txt
+void fecha(int);//Funcion para escribir cuando se activa(ON), desactiva(OFF) y detecta(DETECCION) la alarma en un txt
 void Alarm(int flag, SerialPort *arduino, char* pass,char* pass_aux,int* act); //Funcion para activar o desactivar la alarma
 
 void main()
@@ -201,7 +201,7 @@ void Alarm(int flag, SerialPort *arduino, char *pass,char *pass_aux, int *act)
 			if (strcmp(pass_aux, pass) == 0)
 			{
 				printf("Clave correcta\nAlarma activa\n\n");
-				fecha(1);
+				fecha(ON);
 
 				sendData = 'a'; //Activa arduino
 				writeSerialPort(arduino, &sendData, sizeof(char));
@@ -221,7 +221,7 @@ void Alarm(int flag, SerialPort *arduino, char *pass,char *pass_aux, int *act)
 		if (strcmp(pass_aux, pass) == 0)
 		{
 			printf("Clave correcta\nAlarma desactivada\n\n");
-			fecha(2);
+			fecha(OFF);
 
 			sendData = 'o'; //Desactiva arduino
 			writeSerialPort(arduino, &sendData, sizeof(char));
@@ -244,7 +244,7 @@ void Alarm(int flag, SerialPort *arduino, char *pass,char *pass_aux, int *act)
 				system("CLS");
 				printf("			SISTEMA DE ALARMAS KEEP'N YOU SAFE\n\n");
 				printf("PRESENCIA DETECTADA!\n\nIntroduzca clave para desactivar: ");
-				fecha(3);
+				fecha(DETECCION);
 				pass_aux = Password();
 				if (strcmp(pass, pass_aux) != 0)
 				{
@@ -493,13 +493,13 @@ void fecha(int flag) {
 	current_time = time(NULL);
 	switch (flag)
 	{
-	case 1:
+	case ON:
 		fprintf(filetime, "La alarma se activo: %s", ctime(&current_time));
 		break;
-	case 2:
+	case OFF:
 		fprintf(filetime, "La alarma se desactivo: %s", ctime(&current_time));
 		break;
-	case 3:
+	case DETECCION:
 		fprintf(filetime, "Se ha detectado presencia: %s", ctime(&current_time));
 		break;
 	}
