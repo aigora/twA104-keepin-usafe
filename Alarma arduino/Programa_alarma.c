@@ -168,7 +168,7 @@ void autoConnect(SerialPort *arduino, char *incomingData, char *pass)
 						Sleep(700);
 						exit(0);
 					}
-					else
+					else //Si has introducido mal la clave para desactivar la alarma vuelve al menu
 						break;
 				}
 				else if (opc == 'n')
