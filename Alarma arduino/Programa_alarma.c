@@ -281,7 +281,8 @@ char* DefinePass(int flag)
 	if (pass1 == NULL)
 	{
 		printf("No hay memoria disponible\n");
-		system("PAUSE");
+		printf("Pulse una tecla para continuar");
+		_getch();
 		exit(1);
 	}
 	*pass1 = NULL;
@@ -290,7 +291,8 @@ char* DefinePass(int flag)
 	if (pass_aux == NULL)
 	{
 		printf("No hay memoria disponible\n");
-		system("PAUSE");
+		printf("Pulse una tecla para continuar");
+		_getch();
 		exit(1);
 	}
 	*pass_aux = NULL;
@@ -400,7 +402,8 @@ char* Password()
 	if (pass == NULL)
 	{
 		printf("No hay memoria disponible\n");
-		system("PAUSE");
+		printf("Pulse una tecla para continuar");
+		_getch();
 		exit(1);
 	}
 
@@ -489,7 +492,8 @@ void fecha(int flag) {
 	if (err1 != NULL)
 	{
 		printf("El archivo no se ha abierto corretamente\n");
-		getchar();
+		printf("Pulse una tecla para continuar");
+		_getch();
 		fclose(filetime);
 		exit(1);
 	}
@@ -521,7 +525,8 @@ void registro() {
 	if (err1 != NULL)
 	{
 		printf("El archivo no se ha abierto corretamente\n");
-		getchar();
+		printf("Pulse una tecla para continuar");
+		_getch();
 		fclose(filetime);
 		exit(1);
 	}
