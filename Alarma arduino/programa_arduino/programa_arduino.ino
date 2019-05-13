@@ -1,5 +1,4 @@
 #include <LiquidCrystal_I2C.h> // Librerias para la lcd
-#include<wire.h> 
 #define distancialimite 10 //Introducir distancia a la que está el tope, si es menor, la alarma se activa
 LiquidCrystal_I2C lcd(0x27,16,2); //Pin SDA del lcd debe ir en A4 y pin SCL debe ir en A5
 
