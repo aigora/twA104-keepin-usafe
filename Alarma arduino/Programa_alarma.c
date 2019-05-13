@@ -166,6 +166,7 @@ void autoConnect(SerialPort *arduino, char *incomingData, char *pass)
 					{
 						printf("\nHasta luego!");
 						Sleep(700);
+						free(pass);
 						exit(0);
 					}
 					else //Si has introducido mal la clave para desactivar la alarma vuelve al menu
@@ -182,6 +183,7 @@ void autoConnect(SerialPort *arduino, char *incomingData, char *pass)
 	if (!isConnected(arduino))
 	{
 		printf("\nSe ha perdido la conexion con Arduino\n");
+		free(pass);
 		system("PAUSE");
 	}
 }
@@ -350,7 +352,7 @@ char* DefinePass(int flag)
 				printf("			SISTEMA DE ALARMAS KEEP'N YOU SAFE\n\n");
 			}
 
-			//Si queriamos cambiar la clave y no coincide, ponemos la que habiamos grabado en el pass_auxiliar
+			//Si queriamos cambiar la clave y no coincide, ponemos la que habiamos grabado en el pass_auxiliar para no realizar cambios
 			if (flag == 1 && strcmp(pass1, pass2) != 0)
 			{
 				strcpy(pass1, pass_aux);
