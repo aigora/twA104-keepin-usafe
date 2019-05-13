@@ -184,7 +184,8 @@ void autoConnect(SerialPort *arduino, char *incomingData, char *pass)
 	{
 		printf("\nSe ha perdido la conexion con Arduino\n");
 		free(pass);
-		system("PAUSE");
+		printf("Pulse una tecla para continuar");
+		_getch();
 	}
 }
 
