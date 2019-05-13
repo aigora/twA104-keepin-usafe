@@ -258,7 +258,7 @@ void Alarm(int flag, SerialPort *arduino, char *pass,char *pass_aux, int *act)
 				else
 				{
 					printf("Clave correcta\nALARMA DESACTIVADA!\n\n");
-					fecha(2);
+					fecha(OFF);
 					sendData = 'o'; //Desactiva el arduino
 					writeSerialPort(arduino, &sendData, sizeof(char));
 					*act = 0; //Flag para indicar que la alarma se ha desactivado
@@ -301,9 +301,9 @@ char* DefinePass(int flag)
 	err_pass = fopen_s(&filepass, "password.txt", "r");
 	if (err_pass != NULL)
 	{
-		printf("El archivo no se ha abierto corretamente\n");
+		printf("El archivo password no se ha abierto corretamente\n");
+		printf("Pulse una tecla para continuar");
 		_getch();
-		fclose(filepass);
 		free(pass1);
 		free(pass_aux);
 		exit(1);
@@ -318,10 +318,32 @@ char* DefinePass(int flag)
 			fscanf_s(filepass, "%s", (pass_aux), _msize(pass_aux));
 		}
 		fclose(filepass);
+
+		//Lo abrimos como solo escritura
 		err_pass = fopen_s(&filepass, "password.txt", "w");
+		if (err_pass != NULL)
+		{
+			printf("El archivo password no se ha abierto corretamente\n");
+			printf("Pulse una tecla para continuar");
+			_getch();
+			free(pass1);
+			free(pass_aux);
+			exit(1);
+		}
 		fprintf(filepass, "\0");
 		fclose(filepass);
+
+		//Lo volvemos a abrir como solo lectura
 		err_pass = fopen_s(&filepass, "password.txt", "r");
+		if (err_pass != NULL)
+		{
+			printf("El archivo password no se ha abierto corretamente\n");
+			printf("Pulse una tecla para continuar");
+			_getch();
+			free(pass1);
+			free(pass_aux);
+			exit(1);
+		}
 	}
 
 	//Introducimos en pass1 la contraseña que haya definida en el archivo
@@ -364,14 +386,14 @@ char* DefinePass(int flag)
 				break;
 			}
 		} while (strcmp(pass1, pass2) != 0);
-
+		
+		//Abrimos de nuevo el archivo como solo escritura
 		err_pass = fopen_s(&filepass, "password.txt", "w");
 		if (err_pass != NULL)
 		{
-			printf("El archivo no se ha abierto corretamente\n");
+			printf("El archivo password no se ha abierto corretamente\n");
 			printf("Pulse una tecla para continuar");
 			_getch();
-			fclose(filepass);
 			free(pass1);
 			exit(1);
 		}
@@ -491,10 +513,9 @@ void fecha(int flag) {
 	err1 = fopen_s(&filetime, "history.txt", "a");
 	if (err1 != NULL)
 	{
-		printf("El archivo no se ha abierto corretamente\n");
+		printf("El archivo history no se ha abierto corretamente\n");
 		printf("Pulse una tecla para continuar");
 		_getch();
-		fclose(filetime);
 		exit(1);
 	}
 	current_time = time(NULL);
@@ -512,7 +533,8 @@ void fecha(int flag) {
 	}
 	fclose(filetime);
 }
-void registro() {
+void registro() 
+{
 	FILE *filetime;
 	errno_t err1;
 	char *fecha;
@@ -524,10 +546,9 @@ void registro() {
 	err1 = fopen_s(&filetime, "history.txt", "r");
 	if (err1 != NULL)
 	{
-		printf("El archivo no se ha abierto corretamente\n");
+		printf("El archivo history no se ha abierto corretamente\n");
 		printf("Pulse una tecla para continuar");
 		_getch();
-		fclose(filetime);
 		exit(1);
 	}
 	while (feof(filetime) == NULL)
