@@ -7,7 +7,7 @@
 //Biblioteca comunicación serial arduino
 #include"SerialPort.h"
 
-#define length 16 //Longitud máxima permitida en la clave de seguridad de la alarma, la puede variar el usuario
+#define length 16 //Longitud máxima permitida en la clave de seguridad de la alarma, la puede cambiar el usuario
 #define MAX_DATA_LENGTH 255
 #define ON 1
 #define OFF 0
@@ -205,6 +205,7 @@ void Alarm(int flag, SerialPort *arduino, char *pass,char *pass_aux, int *act)
 			{
 				printf("Clave correcta\nAlarma activa\n\n");
 				fecha(ON);
+
 				sendData = 'a'; //Activa arduino
 				writeSerialPort(arduino, &sendData, sizeof(char));
 				*act = 1; //Flag para indicar que la alarma esta activada
@@ -241,12 +242,12 @@ void Alarm(int flag, SerialPort *arduino, char *pass,char *pass_aux, int *act)
 
 	else if (flag == DETECCION)
 		{
+			fecha(DETECCION);
 			do
 			{
 				system("CLS");
 				printf("			SISTEMA DE ALARMAS KEEP'N YOU SAFE\n\n");
 				printf("PRESENCIA DETECTADA!\n\nIntroduzca clave para desactivar: ");
-				fecha(DETECCION);
 				pass_aux = Password();
 				if (strcmp(pass, pass_aux) != 0)
 				{
