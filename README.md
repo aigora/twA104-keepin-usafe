@@ -13,6 +13,6 @@ Este programa tendra una comunicación serial entre Visual Studio y Arduino, sie
 
 Para el correcto funcionamiento del programa se deben incluir todos los archivos (excepto los que son del programa del propio arduino que pueden ir aparte) en la carpeta del proyecto que te crees.
 
-Igualmente hemos subido un video demostración a Drive para mostrar el funcionamiento de programa:
+Igualmente hemos subido un video demostración para mostrar el funcionamiento de programa:
 
-https://drive.google.com/file/d/1vg8UWxDDfZtwGWAotqxK1oqjC9f1K7x0/view
+https://www.youtube.com/watch?v=GdHsi51kke0&t=39s
