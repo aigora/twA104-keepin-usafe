@@ -4,7 +4,7 @@ Alarma autmática realizada con arduino que sea capaz de detectar y avisar del p
 
 ## Integrantes del equipo
 
-David Hergueta Soto NºMat.54666 (usuario davidherguetasoto) y Guillermo Aparicio Voces NºMat.54483 (usuario guillermoapariciovoces).
+David Hergueta Soto (usuario davidherguetasoto) y Guillermo Aparicio Voces (usuario guillermoapariciovoces).
 
 ## Objetivos del trabajo
 
