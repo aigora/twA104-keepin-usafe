@@ -380,6 +380,7 @@ char* DefinePass(int flag)
 			//Si queriamos cambiar la clave y no coincide, ponemos la que habiamos grabado en el pass_auxiliar para no realizar cambios
 			if (flag == 1 && strcmp(pass1, pass2) != 0)
 			{
+				pass1 = (char*)realloc(pass1, strlen(pass_aux) + 1);
 				strcpy(pass1, pass_aux);
 				free(pass2);
 				free(pass_aux);
